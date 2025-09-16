@@ -43,8 +43,7 @@ class InterpreterIndexSanteTest {
 
 
         //THEN
-        assertThat(diagnostic).hasSize(1);
-        assertThat(diagnostic.get(0)).isEqualTo("Cardiologie");
+        assertThat(diagnostic).hasSize(1).contains("Cardiologie");
     }
 
 
@@ -58,8 +57,7 @@ class InterpreterIndexSanteTest {
 
 
         //THEN
-        assertThat(diagnostic).hasSize(1);
-        assertThat(diagnostic.get(0)).isEqualTo("Traumatologie");
+        assertThat(diagnostic).hasSize(1).contains("Traumatologie");
     }
 
     @ParameterizedTest(name = "pour index de santé {0}")
