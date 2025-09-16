@@ -1,7 +1,11 @@
 package fr.softwaymedical.diagnostic.interpreter_index_sante;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,91 +17,62 @@ class InterpreterIndexSanteTest {
         interpreterIndexSante = new InterpreterIndexSante();
     }
 
-    @Test
-    void casZeroDoitRenvoyerNull() {
+    @ParameterizedTest(name = "pour index de santé {0}")
+    @ValueSource(ints = {0, 1, 34})
+    void casNonMultipleTroisOuCinqDoitRenvoyerVide(int indexSante) {
 
         //GIVEN
 
         //WHEN
-        String diagnostic = interpreterIndexSante.execute(0);
+        List<String> diagnostic = interpreterIndexSante.execute(indexSante);
 
 
         //THEN
-        assertThat(diagnostic).isNull();
+        assertThat(diagnostic).isEmpty();
     }
 
-    @Test
-    void casUnDoitRenvoyerNull() {
+
+    @ParameterizedTest(name = "pour index de santé {0}")
+    @ValueSource(ints = {3, 6, 33})
+    void casIndexMultipleTroisDoitRenvoyerCardiologie(int indexSante) {
 
         //GIVEN
 
         //WHEN
-        String diagnostic = interpreterIndexSante.execute(1);
+        List<String> diagnostic = interpreterIndexSante.execute(indexSante);
 
 
         //THEN
-        assertThat(diagnostic).isNull();
+        assertThat(diagnostic).hasSize(1);
+        assertThat(diagnostic.get(0)).isEqualTo("Cardiologie");
     }
 
-    @Test
-    void casTroisDoitRenvoyerCardiologie() {
 
+    @ParameterizedTest(name = "pour index de santé {0}")
+    @ValueSource(ints = {5, 10, 55})
+    void casMultipleCinqDoitRenvoyerTraumatologie(int indexSante) {
         //GIVEN
 
         //WHEN
-        String diagnostic = interpreterIndexSante.execute(3);
+        List<String> diagnostic = interpreterIndexSante.execute(indexSante);
 
 
         //THEN
-        assertThat(diagnostic).isEqualTo("Cardiologie");
+        assertThat(diagnostic).hasSize(1);
+        assertThat(diagnostic.get(0)).isEqualTo("Traumatologie");
     }
 
-    @Test
-    void casSixDoitRenvoyerCardiologie() {
+    @ParameterizedTest(name = "pour index de santé {0}")
+    @ValueSource(ints = {15, 30, 90})
+    void casMultipleTroisEtCinqDoitRenvoyerCardiologieEtTraumatologie(int indexSante) {
         //GIVEN
 
         //WHEN
-        String diagnostic = interpreterIndexSante.execute(6);
+        List<String> diagnostic = interpreterIndexSante.execute(indexSante);
 
 
         //THEN
-        assertThat(diagnostic).isEqualTo("Cardiologie");
-    }
-
-    @Test
-    void casCinqDoitRenvoyerTraumatologie() {
-        //GIVEN
-
-        //WHEN
-        String diagnostic = interpreterIndexSante.execute(5);
-
-
-        //THEN
-        assertThat(diagnostic).isEqualTo("Traumatologie");
-    }
-
-    @Test
-    void casDixDoitRenvoyerTraumatologie() {
-        //GIVEN
-
-        //WHEN
-        String diagnostic = interpreterIndexSante.execute(10);
-
-
-        //THEN
-        assertThat(diagnostic).isEqualTo("Traumatologie");
-    }
-
-    @Test
-    void casQuinzeDoitRenvoyerCardiologieEtTraumatologie() {
-        //GIVEN
-
-        //WHEN
-        String diagnostic = interpreterIndexSante.execute(15);
-
-
-        //THEN
-        assertThat(diagnostic).isEqualTo("Traumatologie");
+        assertThat(diagnostic).hasSize(2).containsAll(Arrays.asList("Traumatologie", "Cardiologie"));
     }
 
 }
