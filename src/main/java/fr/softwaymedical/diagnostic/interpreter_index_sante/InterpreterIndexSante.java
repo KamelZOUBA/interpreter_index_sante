@@ -1,4 +1,4 @@
-package softwaymedical.diagnostic.interpreter_index_sante;
+package fr.softwaymedical.diagnostic.interpreter_index_sante;
 
 /**
  * class qui interprète l'index de santé d'un patient pour le rediriger vers le(s) bon(s) service(s)

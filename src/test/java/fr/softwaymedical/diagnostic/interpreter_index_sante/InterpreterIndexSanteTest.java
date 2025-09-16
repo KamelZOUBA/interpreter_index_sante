@@ -1,4 +1,4 @@
-package softwaymedical.diagnostic.interpreter_index_sante;
+package fr.softwaymedical.diagnostic.interpreter_index_sante;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
